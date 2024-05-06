@@ -1,0 +1,14 @@
+C:\Users\U59A24\source\classrepos\KittyCityVet\bin\Debug\net8.0\KittyCityVet.exe
+C:\Users\U59A24\source\classrepos\KittyCityVet\bin\Debug\net8.0\KittyCityVet.deps.json
+C:\Users\U59A24\source\classrepos\KittyCityVet\bin\Debug\net8.0\KittyCityVet.runtimeconfig.json
+C:\Users\U59A24\source\classrepos\KittyCityVet\bin\Debug\net8.0\KittyCityVet.dll
+C:\Users\U59A24\source\classrepos\KittyCityVet\bin\Debug\net8.0\KittyCityVet.pdb
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.AssemblyInfoInputs.cache
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.AssemblyInfo.cs
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.csproj.CoreCompileInputs.cache
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.dll
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\refint\KittyCityVet.dll
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.pdb
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.genruntimeconfig.cache
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\ref\KittyCityVet.dll
