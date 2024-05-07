@@ -104,6 +104,7 @@ Type '1' To Set up a New Pet Record
 Type '2' To Update a Pet Record
 Type '3' To View a Pet Record
 Type '4' To Close Out a Pet Record
+Type '5' Exit system 
 
 
 Pet Parent Screen Design
@@ -113,3 +114,4 @@ Pet Parent Screen Design
 ------------------------------------
 Type '1' To View a Pet Record
 Type '2' To Request Call Back
+Type '3' Exit system 
