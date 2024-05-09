@@ -12,3 +12,4 @@ C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\refint\KittyCity
 C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.pdb
 C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.genruntimeconfig.cache
 C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\ref\KittyCityVet.dll
+C:\Users\U59A24\source\classrepos\KittyCityVet\obj\Debug\net8.0\KittyCityVet.sourcelink.json

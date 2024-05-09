@@ -2,6 +2,7 @@ class Pet
 {
     //Class Fields
     public int PetIdNum { get; set; }
+    public int PersonId { get; set; } /* This will the Pet Parents Person ID */
     public string? Name { get; set; }
     public string? Color{ get; set; }
     public string? FurType{ get; set; }
@@ -10,7 +11,9 @@ class Pet
     public int Age{ get; set; }
     public bool InSidePet{ get; set; }
     public DateTime AppointmentDate{ get; set; }
-    public DateTime RainbowBridgeDate{ get; set; } 
+    public string? SeenBy { get; set; } /* This will be the Vet Employee making new record/updates Title + Name */
+    public string? RainbowBridgeDate{ get; set; } 
+    
 
     /* NO Argurments Constructor*/
     public Pet()
@@ -19,9 +22,10 @@ class Pet
     }
 
     /* FULL Argurments Constructor */
-    public Pet(int petIdNum, string name, string color, string furType, string gender, int weight, int age, bool inSidePet)
+    public Pet(int petIdNum, int personId, string name, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
     {
         PetIdNum = petIdNum;
+        PersonId= personId;
         Name = name;
         Color = color;
         FurType = furType;
@@ -30,7 +34,8 @@ class Pet
         Age = age; 
         InSidePet = inSidePet;
         AppointmentDate = DateTime.Now;
-        RainbowBridgeDate = DateTime.MinValue; 
+        SeenBy = seenBy; 
+        RainbowBridgeDate = rainbowBridgeDate; 
     }
 
         // Class Methods
@@ -72,7 +77,9 @@ class Pet
         public override string ToString() 
     {
         string newString = "";
-        newString += "Name: " + Name;
+        newString += "Pet Id: " + PetIdNum;
+        newString += " -- Pet Parent Id: " +  PersonId;
+        newString += " -- Name: " + Name;
         newString += " -- Color: " + Color;
         newString += " -- FurType: " + FurType;
         newString += " -- Gender: " + Gender;
@@ -80,7 +87,8 @@ class Pet
         newString += " -- Age: " + Age;
         newString += " -- Lives Inside Only: " + InSidePet;
         newString += " -- Appointment Date: " + AppointmentDate;
-
+        newString += " -- Seen By: " + SeenBy;
+        newString += " -- RainbowBridge Date: " + RainbowBridgeDate;
         return newString;
     }
 }

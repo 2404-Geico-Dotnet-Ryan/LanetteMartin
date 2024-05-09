@@ -32,46 +32,27 @@ o	Runs program control
 •	Pet 
 o	Details a Pet 
 
-•	People 
+•	Person 
 o	Details things ALL People who use the system have in common
-
-•	Employee : People 
-o	Inherits People 
-o	Adds details only related to a Vet Office Employee 
-
-•	Parent : People 
-o	Inherits People 
-o	Adds details only related to a Pet Parent
-
 
 
 Database Tables 
 
-•	Users
-o	UserIDNum – PK
-o	PersonType – “1” - Employee   “2” - Pet Parent
+•	Person
+o	PersonId – PK
+o	PersonType – “1” – Employee, “2” – Pet Parent
+o	FirstName
+o	LastName
+o	PhoneNum
+o	JobTitle
 o	UserName
 o	UserPassword
-o	AccessLevel
+o	AccessLevel – “1” – Update, “2” – Read Only
 
-•	Employee
-o	EmpIdNum– PK 
-o	UserIDNum – FK
-o	FirstName
-o	LastName
-o	JobTitle
-
-•	Parent
-o	ParentRowID – PK 
-o	UserIDNum – FK
-o	FirstName
-o	LastName
-o	PhoneNumber
 
 •	Pet 
-o	PetRowId – PK
-o	PetIdNum – FK
-o	ParentRowID - FK
+o	PetIdNum – PK, FK
+o	PersonId - FK
 o	Name
 o	Color
 o	FurType
@@ -79,13 +60,13 @@ o	Gender
 o	Weight
 o	Age
 o	InsidePet
-o	RainbowBridgeDate
 o	AppointmentDate
-o	EmployeeNum
+o	SeenBy
+o	RainbowBridgeDate
 
 
 
-Home Screen Design 
+System Home Screen
 ----------------------------------------
 - Welcome to the Kitty City Vet Office -
 -          Pet Records System          -
@@ -95,21 +76,25 @@ Type '1' if you are Vet Staff
 Type '2' if you are a Pet Parent
 
 
-Vet Staff Screen Design 
-------------------------------------
-- Wecome to the Pet Records System -
--        Vet Staff Options         -
-------------------------------------
+
+Vet Staff Screen
+-------------------------------------
+- Welcome to the Pet Records System -
+-        Vet Staff Options          -
+-------------------------------------
 Type '1' To Set up a New Pet Record
 Type '2' To Update a Pet Record
 Type '3' To View a Pet Record
 Type '4' To Close Out a Pet Record
+Type '5' Exit system
 
 
-Pet Parent Screen Design
-------------------------------------
-- Wecome to the Pet Records System -
--        Pet Parent Options        -
-------------------------------------
+
+Pet Parent Screen
+-------------------------------------
+- Welcome to the Pet Records System -
+-        Pet Parent Options         -
+-------------------------------------
 Type '1' To View a Pet Record
 Type '2' To Request Call Back
+Type '3' Exit system
