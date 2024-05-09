@@ -10,11 +10,13 @@ class Person
     public string? UserPassword { get; set; }
     public int AccessLevel { get; set; }  /* 1 - Update  2 - ReadOnly */
 
+    /* NO Argurments Constructor*/
     public Person()
     {
 
     }
 
+    /* FULL Argurments Constructor */
     public Person(int personId, int personType, string firstName, string lastName, string phoneNum, string jobTitle, string userName, string userPassword, int accessLevel)
     {
     PersonId = personId;
@@ -28,6 +30,7 @@ class Person
     AccessLevel = accessLevel;  
     }
 
+    /* Person ToString */
     public override string ToString() 
     {
         string newString = "";

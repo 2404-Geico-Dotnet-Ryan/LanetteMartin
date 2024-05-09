@@ -13,7 +13,7 @@ class PersonStorage
         Person person3 = new Person(IdCounter++, 1, "Lilcow", "Moo", "123-555-2020", "PetParent", "parent1", "123456", 2);
         Person person4 = new Person(IdCounter++, 1, "TMouse", "Rat", "123-555-3030", "PetParent", "parent2", "123456", 2);
 
-        /* Add our Persons to the new dictionary */
+        /* Add the new Person Objects to the dictionary */
         persons = [];
         persons.Add(person1.PersonId, person1);
         persons.Add(person2.PersonId, person2);

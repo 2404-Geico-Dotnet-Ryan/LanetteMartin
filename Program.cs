@@ -6,7 +6,7 @@ class Program
     This program will track pets seen by the staff of the Kitty City Vet Office.  
 
     Office Staff - will be able to create new Pet Records, Update Pet Records and Close Out Pet Records
-    Pet Owners   - will be able to view their pets records 
+    Pet Owners   - will be able to view their pet's records and reqeust a call back from the Vet staff
     */
     static void Main(string[] args)
     {
@@ -32,6 +32,9 @@ class Program
         }
     }
 
+    /*********************************************************************/
+    /* The following section of code determines who is useing the system */ 
+    /*********************************************************************/
     public static int DetermineSystemUser()
     {
         int systemUser = 0;
@@ -165,13 +168,13 @@ class Program
         }
     }
 
-
-    /***************************/
-    /* Methods ran by program */
-    /**************************/
+    /***********************************************/
+    /* Method Name - NewPetRecord                  */
+    /* Inputs      - VetRepo Object, Console Input */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     private static void NewPetRecord(VetRepo vr)
     {
-        /* Need to update to ti build a new Pet Parent Person for now will set it to known number */
         Console.WriteLine(); 
         Console.WriteLine("Please Enter Pet Parent Information");
         Console.WriteLine("-----------------------------------");
@@ -190,10 +193,11 @@ class Program
         string personUserName = "parent3";
         string personPassword = "123456";
 
+        /* Creates a new Pet Parent (Person) */ 
+        /* Will use the new Per Parents ID when builidng thier Pet's Record */ 
         Person newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNum, personTitle, personUserName, personPassword, 2);
         newPerson = vr.AddPerson(newPerson);
 
-        /* Need to update to add SeenBY based on who is logged into the system */
         Console.WriteLine();
         Console.WriteLine("Please Enter Pet Information");
         Console.WriteLine("----------------------------");
@@ -230,11 +234,14 @@ class Program
             else inSide  = false;
         }
 
-        /* Hard Coded until we know who is logged into the system then will update with their informaiton */ 
+        /* Need to update to set SeenBy based on who is logged into the system */
+        /* Hard Coded until we know who is logged into the system then will update with their information */ 
         string petSeenBy = "HeadVet Dr Charlie Ho";
 
+        /* Creates a new Pet */ 
         Pet newPet = new Pet(0, newPerson.PersonId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, petSeenBy, "0");
 
+        /* Adds the new Pet to the Dictionary */ 
         newPet = vr.AddPet(newPet); 
 
         Console.WriteLine("Newly Added Pet Parent - " + newPerson);
@@ -242,6 +249,11 @@ class Program
         Console.WriteLine("Newly Added Pet - " + newPet);
     }
 
+    /***********************************************/
+    /* Method Name - UpdatePetRecord               */
+    /* Inputs      - VetRepo Object, Console Input */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     private static void UpdatePetRecord(VetRepo vr)
     {
         Console.WriteLine();
@@ -249,10 +261,9 @@ class Program
         Console.WriteLine("       Based On Todays Visit        ");     
         Console.WriteLine("------------------------------------");
 
-        // We are making the assumtion that user knowns IDs that will work 
+        // We are making the assumption that user knowns IDs that will work 
         Pet? updatePet = PromotForId(vr); 
 
-        // We are making the assumtion that user knowns IDs that will work
         Console.WriteLine("Current Pet Age is " + updatePet.Age);
         Console.WriteLine("New Pet Age this appointment");
         updatePet.Age = int.Parse(Console.ReadLine() ?? ""); 
@@ -283,9 +294,14 @@ class Program
         Console.WriteLine("Pet was updated as follows - " + updatePet);
     }
 
+    /***********************************************/
+    /* Method Name - ViewPetRecord                 */
+    /* Input       - VetRepo Object                */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     private static void ViewPetRecord(VetRepo vr)
     {
-        // We are making the assumtion that user knowns IDs that will work 
+        // We are making the assumption that user knowns IDs that will work 
         Pet? retrievePet = PromotForId(vr); 
 
         /* After Pet retrieved display its information*/
@@ -293,7 +309,11 @@ class Program
         Console.WriteLine("Retrieved Pet - " + retrievePet);
     }
 
-
+    /***********************************************/
+    /* Method Name - CloseOutPetRecord             */
+    /* Input       - VetRepo Object, Console Input */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     private static void CloseOutPetRecord(VetRepo vr)
     {
         Console.WriteLine();
@@ -315,6 +335,11 @@ class Program
         Console.WriteLine("Pet Record has been closed out - " + closePet);
     }
 
+    /***********************************************/
+    /* Method Name - PromotForId                   */
+    /* Input       - VetRepo Object, Console Input */
+    /* Returns     - Pet Object                    */
+    /***********************************************/
     public static Pet PromotForId(VetRepo vr)
     {
         // We are making the assumtion that user knowns IDs that will work 
@@ -332,6 +357,11 @@ class Program
         return retrievePet; 
     }
 
+    /***********************************************/
+    /* Method Name - RequstCallBack                */
+    /* Input       - Console Input                 */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     public static void RequstCallBack()
     {
         Console.WriteLine("Call Back Name : ");
@@ -347,6 +377,12 @@ class Program
         WriteToFile(filepath, parentName, parentNumber, petName);
     }
 
+    /***********************************************/
+    /* Method Name - WriteToFile                   */
+    /* Inputs      - filepath, parentName,         */
+    /*               parentNumber, petName         */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
     public static void WriteToFile(string filepath, string parentName, string parentNumber, string petName) 
     {
         using (StreamWriter writer = new StreamWriter(filepath, true))

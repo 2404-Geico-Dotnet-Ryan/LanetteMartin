@@ -1,7 +1,7 @@
 class Pet
 {
     //Class Fields
-    public int PetIdNum { get; set; }
+    public int PetId { get; set; }
     public int PersonId { get; set; } /* This will the Pet Parents Person ID */
     public string? Name { get; set; }
     public string? Color{ get; set; }
@@ -22,9 +22,9 @@ class Pet
     }
 
     /* FULL Argurments Constructor */
-    public Pet(int petIdNum, int personId, string name, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
+    public Pet(int petId, int personId, string name, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
     {
-        PetIdNum = petIdNum;
+        PetId = petId;
         PersonId= personId;
         Name = name;
         Color = color;
@@ -74,7 +74,8 @@ class Pet
         return appointmentDate;
     }
 
-        public override string ToString() 
+    /* Pet ToString */
+    public override string ToString() 
     {
         string newString = "";
         newString += "Pet Id: " + PetIdNum;

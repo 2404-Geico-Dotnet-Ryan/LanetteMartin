@@ -11,7 +11,7 @@ class PetStorage
             Pet pet3 = new Pet (IdCounter++, 4, "DJMeow", "Calico", "Long", "Male", 9, 3, true, "0", "0");
             Pet pet4 = new Pet (IdCounter++, 4, "DJScratchCat", "Black", "Short", "Female", 9, 3, true, "0", "0");
 
-            /* Add our Pets to the new dictionary */
+            /* Add the new Pet Objects to the dictionary */
             pets =  [];
             pets.Add(pet1.PetIdNum,pet1);
             pets.Add(pet2.PetIdNum,pet2);
