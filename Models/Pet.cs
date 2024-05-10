@@ -78,18 +78,19 @@ class Pet
     public override string ToString() 
     {
         string newString = "";
-        newString += "Pet Id: " + PetId;
-        newString += " -- Pet Parent Id: " +  PersonId;
-        newString += " -- Name: " + Name;
-        newString += " -- Color: " + Color;
-        newString += " -- FurType: " + FurType;
-        newString += " -- Gender: " + Gender;
-        newString += " -- Weight: " + Weight;
-        newString += " -- Age: " + Age;
-        newString += " -- Lives Inside Only: " + InSidePet;
-        newString += " -- Appointment Date: " + AppointmentDate;
-        newString += " -- Seen By: " + SeenBy;
-        newString += " -- RainbowBridge Date: " + RainbowBridgeDate;
+        newString += "{Pet Id " + PetId;
+        newString += ", Pet Parent Id " +  PersonId;
+        newString += ", Name " + Name;
+        newString += ", Color " + Color;
+        newString += ", FurType " + FurType;
+        newString += ", Gender " + Gender;
+        newString += ", Weight " + Weight;
+        newString += ", Age " + Age;
+        newString += ", Lives Inside Only " + InSidePet;
+        newString += ", Appointment Date " + AppointmentDate;
+        newString += ", Seen By " + SeenBy;
+        newString += ", RainbowBridge Date " + RainbowBridgeDate;
+        newString += "}";
         return newString;
     }
 }

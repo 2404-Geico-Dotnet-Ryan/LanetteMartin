@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj": {}
+    "C:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj": {}
   },
   "projects": {
-    "c:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj": {
+    "C:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj",
+        "projectUniqueName": "C:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj",
         "projectName": "KittyCityVet",
-        "projectPath": "c:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj",
+        "projectPath": "C:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\KittyCityVet.csproj",
         "packagesPath": "C:\\Users\\U59A24\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\obj\\",
+        "outputPath": "C:\\Users\\U59A24\\source\\classrepos\\LanetteMartin\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\U59A24\\AppData\\Roaming\\NuGet\\NuGet.Config"

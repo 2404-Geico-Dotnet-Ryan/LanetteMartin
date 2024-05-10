@@ -8,6 +8,7 @@ class Program
     Office Staff - will be able to create new Pet Records, Update Pet Records and Close Out Pet Records
     Pet Owners   - will be able to view their pet's records and reqeust a call back from the Vet staff
     */
+    static VetServices vs = new();
     static void Main(string[] args)
     {
         Console.WriteLine("-----------------------------");
@@ -37,8 +38,6 @@ class Program
     /*********************************************************************/
     public static int DetermineSystemUser()
     {
-        int systemUser = 0;
-
         Console.WriteLine("----------------------------------------");
         Console.WriteLine("- Welcome to the Kitty City Vet Office -");
         Console.WriteLine("-          Pet Records System          -");
@@ -48,11 +47,11 @@ class Program
         Console.WriteLine("Type '2' if you are a Pet Parent");
         Console.WriteLine();
     
-        string? userSelection = Console.ReadLine();
+        int userSelection = int.Parse(Console.ReadLine()?? "0");
 
-        if (userSelection !=null) systemUser = int.Parse(userSelection);
+        userSelection = ValidateTask(userSelection, 2);
 
-        return systemUser;
+        return userSelection;
     }
 
     /***********************************************************/
@@ -66,48 +65,63 @@ class Program
 
         while (keepWorking)
         {
-            int taskToRun = 0; 
-
             Console.WriteLine();
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("- Welcome to the Pet Records System -");
             Console.WriteLine("-        Vet Staff Options          -");
             Console.WriteLine("-------------------------------------");
-            Console.WriteLine("Type '1' To Set up a New Pet Record ");
-            Console.WriteLine("Type '2' To Update a Pet Record     ");
-            Console.WriteLine("Type '3' To View a Pet Record       ");
-            Console.WriteLine("Type '4' To Close Out a Pet Record  ");
-            Console.WriteLine("Type '5' Exit system                ");
+            Console.WriteLine("Type '1' To Set up a New Pet Family ");
+            Console.WriteLine("Type '2' To Set up a New Pet Record ");
+            Console.WriteLine("Type '3' To Update a Pet Record     ");
+            Console.WriteLine("Type '4' To View a Pet Record       ");
+            Console.WriteLine("Type '5' To Close Out a Pet Record  ");
+            Console.WriteLine("Type '6' To View List of All People in System ");
+            Console.WriteLine("Type '7' To View List of All Pets in System ");
+            Console.WriteLine("Type '8' Exit system                ");
             Console.WriteLine();
         
-            string? staffSelection = Console.ReadLine();
+            int staffSelection =  int.Parse(Console.ReadLine() ?? "0");
 
-            if (staffSelection !=null) taskToRun = int.Parse(staffSelection);
+            int taskToRun = ValidateTask(staffSelection, 8);
 
             switch (taskToRun)
             {
                 case 1:
                 {
-                    NewPetRecord(vr);
+                    NewPetFamilyRecord(vr);
                     break;
                 }
                 case 2:
                 {
-                    UpdatePetRecord(vr);
+                    //NewPetRecord(vr);
                     break;
                 }
                 case 3:
                 {
-                    ViewPetRecord(vr);
+                    UpdatePetRecord(vr);
                     break;
                 }
                 case 4:
                 {
+                    ViewPetRecord(vr);
+                    break;
+                }
+                case 5:
+                {
                     CloseOutPetRecord(vr);
                     break;
                 }
-
-                case 5:
+                case 6:
+                {
+                    ViewAllPerson();
+                    break;
+                }
+                case 7:
+                {
+                    ViewAllPet();
+                    break;
+                }
+                case 8:
                 {
                     Console.WriteLine("Have a PURRfectly great remaninder of your work day!");
                     Console.WriteLine();
@@ -129,8 +143,6 @@ class Program
 
         while (keepParenting)
         {
-            int taskToRun = 0;
-
             Console.WriteLine();
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("- Welcome to the Pet Records System -");
@@ -141,10 +153,9 @@ class Program
             Console.WriteLine("Type '3' Exit system                 ");
             Console.WriteLine();
         
-            string? parentSelection = Console.ReadLine();
+            int parentSelection =  int.Parse(Console.ReadLine() ?? "0");
 
-            if (parentSelection !=null) taskToRun = int.Parse(parentSelection);
-
+            int taskToRun = ValidateTask(parentSelection, 3);
             switch (taskToRun)
             {
                 case 1:
@@ -169,11 +180,11 @@ class Program
     }
 
     /***********************************************/
-    /* Method Name - NewPetRecord                  */
+    /* Method Name - NewPetFamilyRecord            */
     /* Inputs      - VetRepo Object, Console Input */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void NewPetRecord(VetRepo vr)
+    private static void NewPetFamilyRecord(VetRepo vr)
     {
         Console.WriteLine(); 
         Console.WriteLine("Please Enter Pet Parent Information");
@@ -262,7 +273,7 @@ class Program
         Console.WriteLine("------------------------------------");
 
         // We are making the assumption that user knowns IDs that will work 
-        Pet? updatePet = PromotForId(vr); 
+        Pet? updatePet = PromotForId(); 
 
         Console.WriteLine("Current Pet Age is " + updatePet.Age);
         Console.WriteLine("New Pet Age this appointment");
@@ -294,6 +305,51 @@ class Program
         Console.WriteLine("Pet was updated as follows - " + updatePet);
     }
 
+
+    /***********************************************/
+    /* Method Name - ViewAllPerson                 */
+    /* Input       - No Input                      */
+    /* Returns     - List of all Person in the     */ 
+    /*               system                        */
+    /***********************************************/
+    private static void ViewAllPerson()
+    {
+        Console.WriteLine();
+        Console.WriteLine("List of all Vet Employees and Pet Parents ");
+        Console.WriteLine("              in the system               ");
+        Console.WriteLine("------------------------------------------");
+        /* Get list of all Person in the system */
+        List<Person> persons = vs.GetAllPerson();
+
+        /* Write the list to the Console */
+        foreach (Person person in persons)
+        {
+            Console.WriteLine(person); 
+        }
+    }
+    
+    /***********************************************/
+    /* Method Name - ViewAllPet                    */
+    /* Input       - No Input                      */
+    /* Returns     - List of all Pet in the        */ 
+    /*               system                        */
+    /***********************************************/
+    private static void ViewAllPet()
+    {
+        Console.WriteLine();
+        Console.WriteLine(" List of all Kitty Cats ");
+        Console.WriteLine("     in the system      ");
+        Console.WriteLine("------------------------");
+        /* Get list of all Person in the system */
+        List<Pet> pets = vs.GetAllPet();
+
+        /* Write the list to the Console */
+        foreach (Pet pet in pets)
+        {
+            Console.WriteLine(pet); 
+        }
+    }
+
     /***********************************************/
     /* Method Name - ViewPetRecord                 */
     /* Input       - VetRepo Object                */
@@ -302,12 +358,13 @@ class Program
     private static void ViewPetRecord(VetRepo vr)
     {
         // We are making the assumption that user knowns IDs that will work 
-        Pet? retrievePet = PromotForId(vr); 
+        Pet? retrievePet = PromotForId(); 
 
         /* After Pet retrieved display its information*/
         Console.WriteLine();
         Console.WriteLine("Retrieved Pet - " + retrievePet);
     }
+
 
     /***********************************************/
     /* Method Name - CloseOutPetRecord             */
@@ -322,7 +379,7 @@ class Program
         Console.WriteLine("----------------------------");
 
         // We are making the assumtion that user knowns IDs that will work 
-        Pet?closePet = PromotForId(vr); 
+        Pet?closePet = PromotForId(); 
 
         Console.WriteLine("What day did Kitty cross the Rainbow Bridge:");
         closePet.RainbowBridgeDate = Console.ReadLine()?? "";      
@@ -340,7 +397,7 @@ class Program
     /* Input       - VetRepo Object, Console Input */
     /* Returns     - Pet Object                    */
     /***********************************************/
-    public static Pet PromotForId(VetRepo vr)
+    public static Pet PromotForId()
     {
         // We are making the assumtion that user knowns IDs that will work 
         Pet? retrievePet = null; 
@@ -351,7 +408,7 @@ class Program
             Console.WriteLine();
             Console.WriteLine("Please enter a Pet ID");
             int input = int.Parse(Console.ReadLine() ?? "0");
-            retrievePet = vr.GetPet(input);
+            retrievePet = vs.GetPet(input);
         }
 
         return retrievePet; 
@@ -397,4 +454,21 @@ class Program
         Console.WriteLine();
         }
     }
+
+    /***********************************************/
+    /* Method Name - ValidateTask                  */
+    /* Inputs      - Task number keyed in by user  */
+    /* Returns     - Validated Task Number         */
+    /***********************************************/
+    public static int ValidateTask(int task, int maxOption)
+    {
+        while (task < 0 || task > maxOption)
+        {
+            Console.WriteLine("Invalid Option - Please enter an option number between 1 " + maxOption);
+            task = int.Parse(Console.ReadLine()?? "0");
+        }
+
+        return task;
+    }
+
 }

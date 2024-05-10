@@ -10,8 +10,8 @@ class PersonStorage
         Person person2 = new Person(IdCounter++, 1, "Lorraine", "Martin", "123-555-1515", "Vet Tech", "techvet", "123456", 1);
 
         /* Create Pet Parents */
-        Person person3 = new Person(IdCounter++, 1, "Lilcow", "Moo", "123-555-2020", "PetParent", "parent1", "123456", 2);
-        Person person4 = new Person(IdCounter++, 1, "TMouse", "Rat", "123-555-3030", "PetParent", "parent2", "123456", 2);
+        Person person3 = new Person(IdCounter++, 2, "Lilcow", "Moo", "123-555-2020", "PetParent", "parent1", "123456", 2);
+        Person person4 = new Person(IdCounter++, 2, "TMouse", "Rat", "123-555-3030", "PetParent", "parent2", "123456", 2);
 
         /* Add the new Person Objects to the dictionary */
         persons = [];

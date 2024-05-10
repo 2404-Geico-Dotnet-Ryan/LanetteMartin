@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 class VetServices
 {
     /*
@@ -89,5 +91,10 @@ class VetServices
 
         /* Return list of records belonging to Pet */
         return allPetsRecord; 
+    }
+
+    public Pet? GetPet(int id)
+    {
+        return vr.GetPet(id);
     }
 }

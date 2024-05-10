@@ -13,9 +13,9 @@ class PetStorage
 
             /* Add the new Pet Objects to the dictionary */
             pets =  [];
-            pets.Add(pet1.PetIdNum,pet1);
-            pets.Add(pet2.PetIdNum,pet2);
-            pets.Add(pet3.PetIdNum,pet3);
-            pets.Add(pet4.PetIdNum,pet4);
+            pets.Add(pet1.PetId,pet1);
+            pets.Add(pet2.PetId,pet2);
+            pets.Add(pet3.PetId,pet3);
+            pets.Add(pet4.PetId,pet4);
     }
 }
