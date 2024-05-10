@@ -9,7 +9,7 @@ class VetRepo
     /* Input       - Person Object                 */
     /* Returns     - Person Object                 */
     /***********************************************/
-    public Person AddPerson(Person pr)
+    public Person? AddPerson(Person pr)
     {
         /* Prep counter for adding new record*/
         pr.PersonId = personStorage.IdCounter++;
@@ -22,11 +22,44 @@ class VetRepo
     }
 
     /***********************************************/
+    /* Method Name - GetPerson                     */
+    /* Input       - PersonId                      */
+    /* Returns     - Person that matched to the    */ 
+    /*               passed in PersonId            */
+    /***********************************************/
+    public Person? GetPerson(int id)
+    {
+        /* Check if PetId is in the collection   */
+        /* If it is we will return the Pet tied to the PetId to the user */
+        if (personStorage.persons.ContainsKey(id))
+        {
+           return personStorage.persons[id];
+        }
+        /* We will let user know the passed in PetId was invalid/not found */
+        else 
+        {
+            Console.WriteLine("Invalid Person ID entered please try again"); 
+            Console.WriteLine(); 
+            return null;   
+        }
+    }
+
+    /***********************************************/
+    /* Method Name - GetAllPersons                 */
+    /* Input       - No Input                      */
+    /* Returns     - List of all Pets in system    */
+    /***********************************************/
+    public List<Person> GetAllPersons()
+    {
+        return personStorage.persons.Values.ToList(); 
+    }
+
+    /***********************************************/
     /* Method Name - AddPet                        */
     /* Input       - Pet Object                    */
     /* Returns     - Pet Object                    */
     /***********************************************/
-    public Pet AddPet(Pet pe)
+    public Pet? AddPet(Pet pe)
     {
         /* Prep counter for adding new record*/
         pe.PetId = petStorage.IdCounter++;
@@ -44,7 +77,7 @@ class VetRepo
     /* Returns     - Pet that matched to the passed*/ 
     /*               in PetId                      */
     /***********************************************/
-    public Pet? GetPet (int id)
+    public Pet? GetPet(int id)
     {
         /* Check if PetId is in the collection   */
         /* If it is we will return the Pet tied to the PetId to the user */
@@ -62,16 +95,26 @@ class VetRepo
     }
 
     /***********************************************/
+    /* Method Name - GetAllPets                    */
+    /* Input       - No Input                      */
+    /* Returns     - List of all Pets in system    */
+    /***********************************************/
+    public List<Pet> GetAllPets()
+    {
+        return petStorage.pets.Values.ToList(); 
+    }
+
+    /***********************************************/
     /* Method Name - UpdatePet                     */
     /* Input       - Pet Object                    */
     /* Returns     - Updated Pet Object            */
     /***********************************************/
-    public Pet? UpdatePet( Pet updateP)
+    public Pet? UpdatePet(Pet updateP)
     {
         /* Try to update a Pet in the collection */
         try
         {
-            petStorage.pets[updateP.PetIdNum] = updateP;
+            petStorage.pets[updateP.PetId] = updateP;
 
             return updateP; 
         }
