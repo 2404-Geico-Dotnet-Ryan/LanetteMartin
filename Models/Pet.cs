@@ -78,7 +78,7 @@ class Pet
     public override string ToString() 
     {
         string newString = "";
-        newString += "Pet Id: " + PetIdNum;
+        newString += "Pet Id: " + PetId;
         newString += " -- Pet Parent Id: " +  PersonId;
         newString += " -- Name: " + Name;
         newString += " -- Color: " + Color;
