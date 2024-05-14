@@ -1,29 +1,13 @@
-using System.Reflection.Metadata.Ecma335;
-
-class VetServices
+class PetServices
 {
     /*
     Services:
-        - Get All Persons in system
         - Get All Pets in system
         - Get All Pets belonging to a Person
         - Get ALL Records belonging to a Pet   
     */
 
-    VetRepo vr = new VetRepo();
-
-    /***********************************************/
-    /* Method Name - GetAllPerson                  */
-    /* Inputs      - No Input                      */
-    /* Returns     - List of all Person in system  */
-    /***********************************************/
-    public List<Person> GetAllPerson()
-    {
-        /* Get All Person in system */
-        List<Person> allPerson = vr.GetAllPersons();
-
-        return allPerson;
-    }
+    PetRepo pr = new PetRepo();
 
     /***********************************************/
     /* Method Name - GetAllPet                     */
@@ -33,7 +17,7 @@ class VetServices
     public List<Pet> GetAllPet()
     {
         /* Get All Pet in system */
-        List<Pet> allPets = vr.GetAllPets();
+        List<Pet> allPets = pr.GetAllPets();
 
         return allPets; 
         
@@ -48,7 +32,7 @@ class VetServices
     public List<Pet> GetPersonsPets(int id)
     {
         /* Get All Pets in system */
-        List<Pet> allPets = vr.GetAllPets();
+        List<Pet> allPets = pr.GetAllPets();
 
         /* Filter out only Pets belonging to Person */
         List<Pet> allPersonsPets = new();
@@ -75,7 +59,7 @@ class VetServices
     public List<Pet> GetPetsRecords(int id)
     {
         /* Get All Pets in system */
-        List<Pet> allPets = vr.GetAllPets();
+        List<Pet> allPets = pr.GetAllPets();
 
         /* Filter out only records belonging to Pet */
         List<Pet> allPetsRecord = new();
@@ -93,8 +77,34 @@ class VetServices
         return allPetsRecord; 
     }
 
+    /***********************************************/
+    /* Method Name - AddPet                        */
+    /* Inputs      - Pet                           */
+    /* Returns     - Newly Added pet               */
+    /***********************************************/
+    public Pet? AddPet(Pet p)
+    {
+
+        return pr.AddPet(p); 
+    }
+
+    /***********************************************/
+    /* Method Name - GetPet                        */
+    /* Inputs      - PetId                         */
+    /* Returns     - Located Pet                   */
+    /***********************************************/
     public Pet? GetPet(int id)
     {
-        return vr.GetPet(id);
+        return pr.GetPet(id);
+    }
+
+    /***********************************************/
+    /* Method Name - UpdatePet                        */
+    /* Inputs      - PetId                         */
+    /* Returns     - Located Pet                   */
+    /***********************************************/
+    public Pet? UpdatePet(Pet p)
+    {
+        return pr.UpdatePet(p);
     }
 }

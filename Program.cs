@@ -8,7 +8,9 @@ class Program
     Office Staff - will be able to create new Pet Records, Update Pet Records and Close Out Pet Records
     Pet Owners   - will be able to view their pet's records and reqeust a call back from the Vet staff
     */
-    static VetServices vs = new();
+    static PersonServices prs = new();
+    static PetServices pet = new();
+
     static void Main(string[] args)
     {
         Console.WriteLine("-----------------------------");
@@ -61,8 +63,6 @@ class Program
     {
         bool keepWorking = true; 
 
-        VetRepo vr = new VetRepo(); 
-
         while (keepWorking)
         {
             Console.WriteLine();
@@ -70,14 +70,14 @@ class Program
             Console.WriteLine("- Welcome to the Pet Records System -");
             Console.WriteLine("-        Vet Staff Options          -");
             Console.WriteLine("-------------------------------------");
-            Console.WriteLine("Type '1' To Set up a New Pet Family ");
-            Console.WriteLine("Type '2' To Set up a New Pet Record ");
-            Console.WriteLine("Type '3' To Update a Pet Record     ");
-            Console.WriteLine("Type '4' To View a Pet Record       ");
-            Console.WriteLine("Type '5' To Close Out a Pet Record  ");
+            Console.WriteLine("Type '1' To Set Up a New Pet Family  ");
+            Console.WriteLine("Type '2' To Set Up a New Pet Record  ");
+            Console.WriteLine("Type '3' To View a Pet Record        ");
+            Console.WriteLine("Type '4' To Update a Pet Record      ");
+            Console.WriteLine("Type '5' To Close Out a Pet Record   ");
             Console.WriteLine("Type '6' To View List of All People in System ");
             Console.WriteLine("Type '7' To View List of All Pets in System ");
-            Console.WriteLine("Type '8' Exit system                ");
+            Console.WriteLine("Type '8' Exit System                 ");
             Console.WriteLine();
         
             int staffSelection =  int.Parse(Console.ReadLine() ?? "0");
@@ -88,27 +88,27 @@ class Program
             {
                 case 1:
                 {
-                    NewPetFamilyRecord(vr);
+                    NewPetFamilyRecord();
                     break;
                 }
                 case 2:
                 {
-                    //NewPetRecord(vr);
+                    NewPetRecord();
                     break;
                 }
                 case 3:
                 {
-                    UpdatePetRecord(vr);
+                    ViewPetRecord();
                     break;
-                }
+                }                
                 case 4:
                 {
-                    ViewPetRecord(vr);
+                    UpdatePetRecord();
                     break;
                 }
                 case 5:
                 {
-                    CloseOutPetRecord(vr);
+                    CloseOutPetRecord();
                     break;
                 }
                 case 6:
@@ -138,19 +138,17 @@ class Program
     public static void PetOwnerOptions()
     {
         bool keepParenting = true; 
-        
-        VetRepo vr = new VetRepo(); 
 
         while (keepParenting)
         {
             Console.WriteLine();
-            Console.WriteLine("-------------------------------------");
-            Console.WriteLine("- Welcome to the Pet Records System -");
-            Console.WriteLine("-        Pet Parent Options         -");
-            Console.WriteLine("-------------------------------------");
-            Console.WriteLine("Type '1' To View a Pet Record        ");
-            Console.WriteLine("Type '2' To Request Call Back        ");
-            Console.WriteLine("Type '3' Exit system                 ");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("- Welcome to the Pet Records System  -");
+            Console.WriteLine("-        Pet Parent Options          -");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("Type '1' To View All Your Pets Records");
+            Console.WriteLine("Type '2' To Request A Call Back       ");
+            Console.WriteLine("Type '3' Exit System                  ");
             Console.WriteLine();
         
             int parentSelection =  int.Parse(Console.ReadLine() ?? "0");
@@ -160,7 +158,7 @@ class Program
             {
                 case 1:
                 {
-                    ViewPetRecord(vr);
+                    ViewPetRecord();
                     break;
                 }
                 case 2:
@@ -181,58 +179,165 @@ class Program
 
     /***********************************************/
     /* Method Name - NewPetFamilyRecord            */
-    /* Inputs      - VetRepo Object, Console Input */
+    /* Inputs      - Console Input                 */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void NewPetFamilyRecord(VetRepo vr)
+    private static void NewPetFamilyRecord()
     {
         Console.WriteLine(); 
-        Console.WriteLine("Please Enter Pet Parent Information");
-        Console.WriteLine("-----------------------------------");
+        Console.WriteLine("  Please Enter Pet Parent Information   ");
+        Console.WriteLine(" to check if they are already in system ");
+        Console.WriteLine("----------------------------------------");
 
-        Console.WriteLine("Pet Parent First Name :");
-        string personFirstName = Console.ReadLine()?? "";
+        Person? lookUp = LookUpParent();
 
-        Console.WriteLine("Pet Parent Last Name :");
-        string personLastName = Console.ReadLine()?? "";
+        if (lookUp != null)
+        {
+            Console.WriteLine("Pet Parent was located in the system please use option 2 to add in their new pet");
+            return;
+        }
+       
+        Console.WriteLine();
+        Console.WriteLine("We did not find the Pet Parent in our system lets get them and their kitty added");
+        
+        string personFirstName = "";
+        while (personFirstName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent First Name :");
+            personFirstName = Console.ReadLine()?? "";
+        }
 
-        Console.WriteLine("Pet Parent Phone Number :");
-        string personPhoneNum = Console.ReadLine()?? "";
+        string personLastName = "";
+        while (personLastName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent Last Name :");
+            personLastName = Console.ReadLine()?? "";
+        }
 
-        /* Hard Coded Values for the time being*/
+        string personPhoneNumber = "";
+        while (personPhoneNumber == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent Phone Number :");
+            personPhoneNumber = Console.ReadLine()?? "";
+        }
+
+        string personUserName = "";
+        while (personUserName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent Account User Name :");
+            personUserName = Console.ReadLine()?? "";
+        }
+
+        string personPassword = "";
+        while (personPassword == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent Account Password :");
+            personPassword = Console.ReadLine()?? "";
+        }
+        
+        /* Create a new Pet Parent (Person) */ 
+        /* Hard Coded Values as for now only new Pet Parents can be added to system*/
         string personTitle = "Pet Parent";
-        string personUserName = "parent3";
-        string personPassword = "123456";
 
-        /* Creates a new Pet Parent (Person) */ 
         /* Will use the new Per Parents ID when builidng thier Pet's Record */ 
-        Person newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNum, personTitle, personUserName, personPassword, 2);
-        newPerson = vr.AddPerson(newPerson);
+        Person? newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNumber, personTitle, personUserName, personPassword, 2);
+        prs?.AddNewPerson(newPerson);
 
+        Console.WriteLine("Newly Added Pet Parent - " + newPerson);
+
+        Pet? newPet = NewPet(newPerson.PersonId);
+
+        Console.WriteLine("Newly Added Pet - " + newPet);
+    }
+    
+    /***********************************************/
+    /* Method Name - NewPetRecord                  */
+    /* Inputs      - Console Input                 */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
+    private static void NewPetRecord()
+    {
+        Console.WriteLine(); 
+        Console.WriteLine(" Please Enter Pet Parent Account Information ");
+        Console.WriteLine("---------------------------------------------");
+
+        Person? lookUp = LookUpParent();
+
+        Pet? newPet = NewPet(lookUp.PersonId);
+
+        Console.WriteLine("Newly Added Pet - " + newPet);
+    }
+
+    /***********************************************/
+    /* Method Name - NewPet                        */
+    /* Inputs      - Pet Parent's personId         */
+    /* Returns     - Newly created Pet             */
+    /***********************************************/
+    private static Pet? NewPet(int personId)
+    {
         Console.WriteLine();
         Console.WriteLine("Please Enter Pet Information");
         Console.WriteLine("----------------------------");
 
-        Console.WriteLine("Pet Name :");
-        string petName = Console.ReadLine()?? "";
+        string petName = "";
+        while (petName == "")
+        {
+            Console.WriteLine("Pet Name :");
+            petName = Console.ReadLine()?? "";
+        }
 
-        Console.WriteLine("Fur Color :");
-        string petColor = Console.ReadLine()?? "";
+        string petColor = "";
+        while (petColor == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Fur Color :");
+            petColor = Console.ReadLine()?? "";
+        }
 
-        Console.WriteLine("Fur Type :");
-        string petFurType = Console.ReadLine()?? "";
+        string petFurType = "";
+        while (petFurType == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Fur Type :");
+            petFurType = Console.ReadLine()?? "";
+        }
 
-        Console.WriteLine("Gender :");
-        string petGender = Console.ReadLine()?? "";
+        string petGender = "";
+        while (petGender == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Gender :");
+            petGender = Console.ReadLine()?? "";
+        }
 
-        Console.WriteLine("Age :");
-        int petAge = int.Parse(Console.ReadLine() ?? ""); 
+        int petAge = 0;
+        while (petAge == 0)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Age :");
+            petAge = int.Parse(Console.ReadLine() ?? "0"); 
+        }
        
-        Console.WriteLine("Weight :");
-        int petWeight = int.Parse(Console.ReadLine() ?? ""); 
+        int petWeight = 0;
+        while (petWeight == 0)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Weight :");
+            petWeight = int.Parse(Console.ReadLine() ?? ""); 
+        }
 
-        Console.WriteLine("Inside Pet - True or False");
-        string? petInside = Console.ReadLine();
+        string petInside = "";
+        while (petInside == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Inside Pet - True or False");
+            petInside = Console.ReadLine()?? "";
+        }
 
         bool inSide =  true; 
 
@@ -245,19 +350,15 @@ class Program
             else inSide  = false;
         }
 
-        /* Need to update to set SeenBy based on who is logged into the system */
+        /* Need to update to set SeenBy based on Vet employee who is logged into the system */
         /* Hard Coded until we know who is logged into the system then will update with their information */ 
         string petSeenBy = "HeadVet Dr Charlie Ho";
 
         /* Creates a new Pet */ 
-        Pet newPet = new Pet(0, newPerson.PersonId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, petSeenBy, "0");
+        Pet newPet = new Pet(0, personId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, petSeenBy, "0");
 
         /* Adds the new Pet to the Dictionary */ 
-        newPet = vr.AddPet(newPet); 
-
-        Console.WriteLine("Newly Added Pet Parent - " + newPerson);
-        Console.WriteLine();
-        Console.WriteLine("Newly Added Pet - " + newPet);
+        return pet.AddPet(newPet);
     }
 
     /***********************************************/
@@ -265,46 +366,63 @@ class Program
     /* Inputs      - VetRepo Object, Console Input */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void UpdatePetRecord(VetRepo vr)
+    private static void UpdatePetRecord()
     {
         Console.WriteLine();
         Console.WriteLine("Please Enter Updated Pet Information");
         Console.WriteLine("       Based On Todays Visit        ");     
         Console.WriteLine("------------------------------------");
 
-        // We are making the assumption that user knowns IDs that will work 
+        // We are making the assumption that vet employee knowns IDs that will work
+        // as the have already looked up the Parent's Pets 
         Pet? updatePet = PromotForId(); 
 
+
         Console.WriteLine("Current Pet Age is " + updatePet.Age);
-        Console.WriteLine("New Pet Age this appointment");
-        updatePet.Age = int.Parse(Console.ReadLine() ?? ""); 
+        int newAge = 0;
+        while (newAge == 0)
+        {
+            Console.WriteLine("New Pet Age this appointment");
+            newAge = int.Parse(Console.ReadLine() ?? ""); 
+        }
+        updatePet.Age = newAge;
 
         Console.WriteLine("Current Pet Weight is " + updatePet.Weight);
-        Console.WriteLine("New Pet Weight this appointment");
-        updatePet.Weight = int.Parse(Console.ReadLine() ?? ""); 
-
-        Console.WriteLine("Inside Pet - True or False");
-        string? petInside = Console.ReadLine();
-
-        if (petInside !=null) 
+        int newWeight = 0;
+        while (newWeight == 0)
         {
-            if (petInside.ToUpper() == "TRUE")
-            {
-                updatePet.InSidePet = true; 
-            }
-            else updatePet.InSidePet  = false;
+            Console.WriteLine("New Pet Weight this appointment");
+            newWeight = int.Parse(Console.ReadLine() ?? "");
+        } 
+        updatePet.Weight = newWeight; 
+
+        string petInside = "";
+        while (petInside == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Inside Pet - True or False");
+            petInside = Console.ReadLine()?? "";
         }
 
+        if (petInside.ToUpper() == "TRUE")
+        {
+            updatePet.InSidePet = true; 
+        }
+        else updatePet.InSidePet  = false;
+     
         updatePet.AppointmentDate = DateTime.Now; 
 
+        /* Need to update to set SeenBy based on Vet employee who is logged into the system */
+        /* Hard Coded until we know who is logged into the system then will update with their information */ 
+        updatePet.SeenBy = "HeadVet Dr Charlie Ho";
+
         /* Update the Pet in the collection */
-        updatePet = vr.UpdatePet(updatePet);
+        updatePet = pet.UpdatePet(updatePet);
 
         /* After Pet updated display its new information */
         Console.WriteLine();
         Console.WriteLine("Pet was updated as follows - " + updatePet);
     }
-
 
     /***********************************************/
     /* Method Name - ViewAllPerson                 */
@@ -319,7 +437,7 @@ class Program
         Console.WriteLine("              in the system               ");
         Console.WriteLine("------------------------------------------");
         /* Get list of all Person in the system */
-        List<Person> persons = vs.GetAllPerson();
+        List<Person> persons = prs.GetAllPerson();
 
         /* Write the list to the Console */
         foreach (Person person in persons)
@@ -341,7 +459,7 @@ class Program
         Console.WriteLine("     in the system      ");
         Console.WriteLine("------------------------");
         /* Get list of all Person in the system */
-        List<Pet> pets = vs.GetAllPet();
+        List<Pet> pets = pet.GetAllPet();
 
         /* Write the list to the Console */
         foreach (Pet pet in pets)
@@ -355,63 +473,62 @@ class Program
     /* Input       - VetRepo Object                */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void ViewPetRecord(VetRepo vr)
+    private static void ViewPetRecord()
     {
-        // We are making the assumption that user knowns IDs that will work 
-        Pet? retrievePet = PromotForId(); 
+        Console.WriteLine(); 
+        Console.WriteLine(" Please Enter Pet Parent Account Information ");
+        Console.WriteLine("---------------------------------------------");
 
-        /* After Pet retrieved display its information*/
-        Console.WriteLine();
-        Console.WriteLine("Retrieved Pet - " + retrievePet);
+        Person? lookUp = LookUpParent();
+
+        List<Pet> allPersonsPets = new(); 
+
+        try
+        { 
+            allPersonsPets = pet.GetPersonsPets(lookUp.PersonId); 
+        }
+        catch (NullReferenceException)
+        {
+            Console.WriteLine("Pet Parent was not located in the system");
+        }
+    
+        /* After Pets retrieved display its information*/
+        foreach (Pet pet in allPersonsPets)
+        {
+            Console.WriteLine();
+            Console.WriteLine(pet);
+        }
     }
-
 
     /***********************************************/
     /* Method Name - CloseOutPetRecord             */
     /* Input       - VetRepo Object, Console Input */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void CloseOutPetRecord(VetRepo vr)
+    private static void CloseOutPetRecord()
     {
         Console.WriteLine();
         Console.WriteLine("  Please Enter Date Kitty   ");
         Console.WriteLine(" Crossed the Rainbow Bridge ");     
         Console.WriteLine("----------------------------");
 
-        // We are making the assumtion that user knowns IDs that will work 
+        // We are making the assumption that user knowns IDs that will work 
         Pet?closePet = PromotForId(); 
 
-        Console.WriteLine("What day did Kitty cross the Rainbow Bridge:");
-        closePet.RainbowBridgeDate = Console.ReadLine()?? "";      
-        
+        string petsRainbowBridgeDate = "";
+        while (petsRainbowBridgeDate == "")
+        {
+            Console.WriteLine("What day did Kitty cross the Rainbow Bridge:");
+            petsRainbowBridgeDate = Console.ReadLine()?? "";   
+        }   
+        closePet.RainbowBridgeDate = petsRainbowBridgeDate;
+
         /* Update the Pet in the collection */
-        closePet = vr.UpdatePet(closePet);
+        closePet = pet.UpdatePet(closePet);
 
         /* After Pet updated display its new information */
         Console.WriteLine();
         Console.WriteLine("Pet Record has been closed out - " + closePet);
-    }
-
-    /***********************************************/
-    /* Method Name - PromotForId                   */
-    /* Input       - VetRepo Object, Console Input */
-    /* Returns     - Pet Object                    */
-    /***********************************************/
-    public static Pet PromotForId()
-    {
-        // We are making the assumtion that user knowns IDs that will work 
-        Pet? retrievePet = null; 
-
-        /* Loop asking for valid ID until one is entered by User*/
-        while (retrievePet == null)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Please enter a Pet ID");
-            int input = int.Parse(Console.ReadLine() ?? "0");
-            retrievePet = vs.GetPet(input);
-        }
-
-        return retrievePet; 
     }
 
     /***********************************************/
@@ -421,14 +538,29 @@ class Program
     /***********************************************/
     public static void RequstCallBack()
     {
-        Console.WriteLine("Call Back Name : ");
-        string? parentName = Console.ReadLine()?? "0";
+        string parentName = "";
+        while (parentName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Call Back Name : ");
+            parentName = Console.ReadLine()?? "0";
+        }
 
-        Console.WriteLine("Call Back Number : ");
-        string? parentNumber = Console.ReadLine()?? "0";
+        string parentNumber = "";
+        while (parentNumber == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Call Back Number : ");
+            parentNumber = Console.ReadLine()?? "0";
+        }
 
-        Console.WriteLine("Name of Pet Calling about : ");
-        string? petName = Console.ReadLine()?? "0";
+        string petName = "";
+        while(petName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Name of Pet Calling about : ");
+            petName = Console.ReadLine()?? "0";
+        }
 
         string filepath = "KittyCityCallBackLog.txt";
         WriteToFile(filepath, parentName, parentNumber, petName);
@@ -468,7 +600,57 @@ class Program
             task = int.Parse(Console.ReadLine()?? "0");
         }
 
+
         return task;
+    }
+
+    /***********************************************/
+    /* Method Name - LookUpParent                  */
+    /* Inputs      - Console Input                 */
+    /* Returns     - Person matching to inputs     */
+    /***********************************************/
+    private static Person? LookUpParent()
+    {
+        string personPhoneNum = "";
+        while (personPhoneNum == "")
+        {
+            Console.WriteLine("Pet Parent Phone Number :");
+            personPhoneNum = Console.ReadLine()?? "";
+        }
+
+        string personUserName = "";
+        while (personUserName == "")
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pet Parent User Name :");
+            personUserName = Console.ReadLine()?? "";
+        }
+
+        Person? lookUp = prs.LookUpUser(personUserName,personPhoneNum);
+
+        return lookUp; 
+    }
+
+    /***********************************************/
+    /* Method Name - PromotForId                   */
+    /* Input       - VetRepo Object, Console Input */
+    /* Returns     - Pet Object                    */
+    /***********************************************/
+    public static Pet PromotForId()
+    {
+        // We are making the assumption that user knowns IDs that will work 
+        Pet? retrievePet = null; 
+
+        /* Loop asking for valid ID until one is entered by User*/
+        while (retrievePet == null)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Please enter a Pet ID");
+            int input = int.Parse(Console.ReadLine() ?? "0");
+            retrievePet = pet.GetPet(input);
+        }
+
+        return retrievePet; 
     }
 
 }
