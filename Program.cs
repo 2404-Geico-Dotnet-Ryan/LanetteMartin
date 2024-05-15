@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 class Program
 {
@@ -72,7 +73,7 @@ class Program
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("Type '1' To Set Up a New Pet Family  ");
             Console.WriteLine("Type '2' To Set Up a New Pet Record  ");
-            Console.WriteLine("Type '3' To View a Pet Record        ");
+            Console.WriteLine("Type '3' To View All of a Parent's Pets");
             Console.WriteLine("Type '4' To Update a Pet Record      ");
             Console.WriteLine("Type '5' To Close Out a Pet Record   ");
             Console.WriteLine("Type '6' To View List of All People in System ");
@@ -168,7 +169,7 @@ class Program
                 }
                 case 3:
                 {
-                    Console.WriteLine("Thank you for trusting use with your Kitty!");
+                    Console.WriteLine("Thank you for trusting us with your Kitty!");
                     Console.WriteLine();
                     keepParenting = false; 
                     break;
@@ -193,6 +194,7 @@ class Program
 
         if (lookUp != null)
         {
+            Console.WriteLine(); 
             Console.WriteLine("Pet Parent was located in the system please use option 2 to add in their new pet");
             return;
         }
@@ -248,10 +250,12 @@ class Program
         Person? newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNumber, personTitle, personUserName, personPassword, 2);
         prs?.AddNewPerson(newPerson);
 
+        Console.WriteLine(); 
         Console.WriteLine("Newly Added Pet Parent - " + newPerson);
 
         Pet? newPet = NewPet(newPerson.PersonId);
 
+        Console.WriteLine(); 
         Console.WriteLine("Newly Added Pet - " + newPet);
     }
     
@@ -377,7 +381,7 @@ class Program
         // as the have already looked up the Parent's Pets 
         Pet? updatePet = PromotForId(); 
 
-
+        Console.WriteLine();
         Console.WriteLine("Current Pet Age is " + updatePet.Age);
         int newAge = 0;
         while (newAge == 0)
@@ -387,6 +391,7 @@ class Program
         }
         updatePet.Age = newAge;
 
+        Console.WriteLine();
         Console.WriteLine("Current Pet Weight is " + updatePet.Weight);
         int newWeight = 0;
         while (newWeight == 0)
@@ -513,14 +518,19 @@ class Program
         Console.WriteLine("----------------------------");
 
         // We are making the assumption that user knowns IDs that will work 
-        Pet?closePet = PromotForId(); 
+        Pet? closePet = PromotForId(); 
+
+        Console.WriteLine();
+        Console.WriteLine("Pet to close out - " + closePet);
 
         string petsRainbowBridgeDate = "";
         while (petsRainbowBridgeDate == "")
         {
+            Console.WriteLine();
             Console.WriteLine("What day did Kitty cross the Rainbow Bridge:");
             petsRainbowBridgeDate = Console.ReadLine()?? "";   
         }   
+
         closePet.RainbowBridgeDate = petsRainbowBridgeDate;
 
         /* Update the Pet in the collection */
@@ -618,15 +628,7 @@ class Program
             personPhoneNum = Console.ReadLine()?? "";
         }
 
-        string personUserName = "";
-        while (personUserName == "")
-        {
-            Console.WriteLine();
-            Console.WriteLine("Pet Parent User Name :");
-            personUserName = Console.ReadLine()?? "";
-        }
-
-        Person? lookUp = prs.LookUpUser(personUserName,personPhoneNum);
+        Person? lookUp = prs.LookUpPetParent(personPhoneNum);
 
         return lookUp; 
     }
@@ -636,21 +638,51 @@ class Program
     /* Input       - VetRepo Object, Console Input */
     /* Returns     - Pet Object                    */
     /***********************************************/
-    public static Pet PromotForId()
+    public static Pet? PromotForId()
     {
-        // We are making the assumption that user knowns IDs that will work 
-        Pet? retrievePet = null; 
-
         /* Loop asking for valid ID until one is entered by User*/
-        while (retrievePet == null)
+        int inputId = 0;
+        Pet? locatedPet = new();
+
+        while (inputId == 0)
         {
             Console.WriteLine();
             Console.WriteLine("Please enter a Pet ID");
-            int input = int.Parse(Console.ReadLine() ?? "0");
-            retrievePet = pet.GetPet(input);
+            string? userInput = Console.ReadLine();
+
+            if (userInput != null && userInput != "")
+            {           
+                try
+                {
+                    inputId = int.Parse(userInput);
+                    if (inputId < 0)
+                    {
+                        inputId = 0;
+                    } 
+                } 
+                catch (Exception)
+                {
+                    inputId = 0;
+                }
+
+                if (inputId != 0)
+                {
+                    try
+                    {
+                        locatedPet = pet.GetPet(inputId);
+                        if (locatedPet == null)
+                        {
+                        inputId = 0; 
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        inputId = 0;
+                    }
+                }
+            }
         }
-
-        return retrievePet; 
+       
+        return locatedPet; 
     }
-
 }

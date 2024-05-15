@@ -37,8 +37,6 @@ class PetRepo
         /* We will let user know the passed in PetId was invalid/not found */
         else 
         {
-            Console.WriteLine("Invalid Pet ID entered please try again"); 
-            Console.WriteLine(); 
             return null;   
         }
     }

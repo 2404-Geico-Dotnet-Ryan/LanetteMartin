@@ -30,18 +30,30 @@ class PersonServices
         return pr.AddPerson(p);
     }
 
-public Person? LookUpUser(string userName, string phoneNumber)
+    public Person? LookUpUser(string userName, string phoneNumber)
     {
         /* Look thru all users for a match to UserName or PhoneNumber*/ 
         List<Person> allPersons = pr.GetAllPersons();
 
         foreach (Person person in allPersons)
         {
-            if (person.UserName == userName)
+            if (person.UserName == userName && person.PhoneNum == phoneNumber)
             {
                 return person;
             }
-            else if (person.PhoneNum == phoneNumber)
+        } 
+
+        return null; 
+    }
+    
+    public Person? LookUpPetParent(string phoneNumber)
+    {
+        /* Look thru all users for a match to UserName or PhoneNumber*/ 
+        List<Person> allPersons = pr.GetAllPersons();
+
+        foreach (Person person in allPersons)
+        {
+            if (person.PhoneNum == phoneNumber)
             {
                 return person;
             }
