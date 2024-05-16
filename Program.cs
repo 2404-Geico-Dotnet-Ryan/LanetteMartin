@@ -50,7 +50,7 @@ class Program
         Console.WriteLine("Type '2' if you are a Pet Parent");
         Console.WriteLine();
     
-        int userSelection = int.Parse(Console.ReadLine()?? "0");
+        int userSelection = int.Parse(Console.ReadLine().TrimEnd()?? "0");
 
         userSelection = ValidateTask(userSelection, 2);
 
@@ -81,7 +81,7 @@ class Program
             Console.WriteLine("Type '8' Exit System                 ");
             Console.WriteLine();
         
-            int staffSelection =  int.Parse(Console.ReadLine() ?? "0");
+            int staffSelection =  int.Parse(Console.ReadLine().TrimEnd() ?? "0");
 
             int taskToRun = ValidateTask(staffSelection, 8);
 
@@ -152,7 +152,7 @@ class Program
             Console.WriteLine("Type '3' Exit System                  ");
             Console.WriteLine();
         
-            int parentSelection =  int.Parse(Console.ReadLine() ?? "0");
+            int parentSelection =  int.Parse(Console.ReadLine().TrimEnd() ?? "0");
 
             int taskToRun = ValidateTask(parentSelection, 3);
             switch (taskToRun)
@@ -207,7 +207,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Pet Parent First Name :");
-            personFirstName = Console.ReadLine()?? "";
+            personFirstName = Console.ReadLine().TrimEnd()?? "";
         }
 
         string personLastName = "";
@@ -215,7 +215,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Pet Parent Last Name :");
-            personLastName = Console.ReadLine()?? "";
+            personLastName = Console.ReadLine().TrimEnd()?? "";
         }
 
         string personPhoneNumber = "";
@@ -223,7 +223,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Pet Parent Phone Number :");
-            personPhoneNumber = Console.ReadLine()?? "";
+            personPhoneNumber = Console.ReadLine().TrimEnd()?? "";
         }
 
         string personUserName = "";
@@ -231,7 +231,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Pet Parent Account User Name :");
-            personUserName = Console.ReadLine()?? "";
+            personUserName = Console.ReadLine().TrimEnd()?? "";
         }
 
         string personPassword = "";
@@ -239,7 +239,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Pet Parent Account Password :");
-            personPassword = Console.ReadLine()?? "";
+            personPassword = Console.ReadLine().TrimEnd()?? "";
         }
         
         /* Create a new Pet Parent (Person) */ 
@@ -292,7 +292,7 @@ class Program
         while (petName == "")
         {
             Console.WriteLine("Pet Name :");
-            petName = Console.ReadLine()?? "";
+            petName = Console.ReadLine().TrimEnd()?? "";
         }
 
         string petColor = "";
@@ -300,7 +300,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Fur Color :");
-            petColor = Console.ReadLine()?? "";
+            petColor = Console.ReadLine().TrimEnd()?? "";
         }
 
         string petFurType = "";
@@ -308,7 +308,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Fur Type :");
-            petFurType = Console.ReadLine()?? "";
+            petFurType = Console.ReadLine().TrimEnd()?? "";
         }
 
         string petGender = "";
@@ -316,7 +316,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Gender :");
-            petGender = Console.ReadLine()?? "";
+            petGender = Console.ReadLine().TrimEnd()?? "";
         }
 
         int petAge = 0;
@@ -324,7 +324,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Age :");
-            petAge = int.Parse(Console.ReadLine() ?? "0"); 
+            petAge = int.Parse(Console.ReadLine().TrimEnd() ?? "0"); 
         }
        
         int petWeight = 0;
@@ -332,7 +332,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Weight :");
-            petWeight = int.Parse(Console.ReadLine() ?? ""); 
+            petWeight = int.Parse(Console.ReadLine().TrimEnd() ?? ""); 
         }
 
         string petInside = "";
@@ -340,7 +340,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Inside Pet - True or False");
-            petInside = Console.ReadLine()?? "";
+            petInside = Console.ReadLine().TrimEnd()?? "";
         }
 
         bool inSide =  true; 
@@ -387,7 +387,7 @@ class Program
         while (newAge == 0)
         {
             Console.WriteLine("New Pet Age this appointment");
-            newAge = int.Parse(Console.ReadLine() ?? ""); 
+            newAge = int.Parse(Console.ReadLine().TrimEnd() ?? ""); 
         }
         updatePet.Age = newAge;
 
@@ -397,7 +397,7 @@ class Program
         while (newWeight == 0)
         {
             Console.WriteLine("New Pet Weight this appointment");
-            newWeight = int.Parse(Console.ReadLine() ?? "");
+            newWeight = int.Parse(Console.ReadLine().TrimEnd() ?? "");
         } 
         updatePet.Weight = newWeight; 
 
@@ -406,7 +406,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Inside Pet - True or False");
-            petInside = Console.ReadLine()?? "";
+            petInside = Console.ReadLine().TrimEnd()?? "";
         }
 
         if (petInside.ToUpper() == "TRUE")
@@ -415,7 +415,7 @@ class Program
         }
         else updatePet.InSidePet  = false;
      
-        updatePet.AppointmentDate = DateTime.Now; 
+        updatePet.AppointmentDate = DateTime.Now.AddDays(-5);
 
         /* Need to update to set SeenBy based on Vet employee who is logged into the system */
         /* Hard Coded until we know who is logged into the system then will update with their information */ 
@@ -528,7 +528,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("What day did Kitty cross the Rainbow Bridge:");
-            petsRainbowBridgeDate = Console.ReadLine()?? "";   
+            petsRainbowBridgeDate = Console.ReadLine().TrimEnd()?? "";   
         }   
 
         closePet.RainbowBridgeDate = petsRainbowBridgeDate;
@@ -553,7 +553,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Call Back Name : ");
-            parentName = Console.ReadLine()?? "0";
+            parentName = Console.ReadLine().TrimEnd()?? "0";
         }
 
         string parentNumber = "";
@@ -561,7 +561,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Call Back Number : ");
-            parentNumber = Console.ReadLine()?? "0";
+            parentNumber = Console.ReadLine().TrimEnd()?? "0";
         }
 
         string petName = "";
@@ -569,7 +569,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Name of Pet Calling about : ");
-            petName = Console.ReadLine()?? "0";
+            petName = Console.ReadLine().TrimEnd()?? "0";
         }
 
         string filepath = "KittyCityCallBackLog.txt";
@@ -607,7 +607,7 @@ class Program
         while (task < 0 || task > maxOption)
         {
             Console.WriteLine("Invalid Option - Please enter an option number between 1 " + maxOption);
-            task = int.Parse(Console.ReadLine()?? "0");
+            task = int.Parse(Console.ReadLine().TrimEnd()?? "0");
         }
 
 
@@ -625,7 +625,7 @@ class Program
         while (personPhoneNum == "")
         {
             Console.WriteLine("Pet Parent Phone Number :");
-            personPhoneNum = Console.ReadLine()?? "";
+            personPhoneNum = Console.ReadLine().TrimEnd()?? "";
         }
 
         Person? lookUp = prs.LookUpPetParent(personPhoneNum);
@@ -648,7 +648,7 @@ class Program
         {
             Console.WriteLine();
             Console.WriteLine("Please enter a Pet ID");
-            string? userInput = Console.ReadLine();
+            string? userInput = Console.ReadLine().TrimEnd();
 
             if (userInput != null && userInput != "")
             {           
