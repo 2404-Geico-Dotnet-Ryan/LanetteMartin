@@ -1,17 +1,28 @@
-using System.Reflection.Metadata.Ecma335;
-
 class PersonServices
 {
     /*
     Services:
-        - Add New Person to the system
-        - Look up Person in the system
-        - Log User into the system
-        - Get All Persons in system
+        - Add New Person(Pet Parents only at this time)
+        - Look Up a Pet Parent 
+        - Get ALL Records belonging to a Pet   
+        - Add a Pet
+        - Update a Pet
+        - Get a Pet
     */
+    PersonRepo pr;
 
-    PersonRepo pr = new PersonRepo();
+    public PersonServices(PersonRepo personRepo)
+    {
+        pr = personRepo; 
+    }
 
+    /***********************************************/
+    /* Method Name - AddNewPerson                  */
+    /* Inputs      - Person Object containing data */
+    /*               for new Person                */
+    /* Returns     - Person Object containing data */
+    /*               for Person juste added        */
+    /***********************************************/
     public Person? AddNewPerson(Person p)
     {
          /*Will not let you register a new person if the UserName is already in use */
@@ -29,23 +40,12 @@ class PersonServices
         /* If pass both check add the new user */
         return pr.AddPerson(p);
     }
-
-    public Person? LookUpUser(string userName, string phoneNumber)
-    {
-        /* Look thru all users for a match to UserName or PhoneNumber*/ 
-        List<Person> allPersons = pr.GetAllPersons();
-
-        foreach (Person person in allPersons)
-        {
-            if (person.UserName == userName && person.PhoneNum == phoneNumber)
-            {
-                return person;
-            }
-        } 
-
-        return null; 
-    }
     
+    /***********************************************/
+    /* Method Name - LookUpPetParent               */
+    /* Inputs      - Phone Number                  */
+    /* Returns     - Person Object found           */
+    /***********************************************/
     public Person? LookUpPetParent(string phoneNumber)
     {
         /* Look thru all users for a match to UserName or PhoneNumber*/ 
@@ -62,6 +62,11 @@ class PersonServices
         return null; 
     }
 
+    /***********************************************/
+    /* Method Name - LoginUser                     */
+    /* Inputs      - User Name and Password        */
+    /* Returns     - Person Object found           */
+    /***********************************************/
     public Person? LoginUser(string userName, string userPassword)
     {
         /* Look thru all users for a match to UserName and Password*/ 
@@ -77,6 +82,7 @@ class PersonServices
                 }
                 else
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Password was invalid");
                     return null; 
                 }
@@ -84,6 +90,7 @@ class PersonServices
         }  
 
         /* If loop found no match means we never found a match */
+        Console.WriteLine();
         Console.WriteLine("Person was not found in the system");
         return null; 
     }

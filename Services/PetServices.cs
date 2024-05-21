@@ -5,9 +5,17 @@ class PetServices
         - Get All Pets in system
         - Get All Pets belonging to a Person
         - Get ALL Records belonging to a Pet   
+        - Add a Pet
+        - Update a Pet
+        - Get a Pet
     */
 
-    PetRepo pr = new PetRepo();
+    PetRepo pr;
+
+    public PetServices(PetRepo petRepo)
+    {
+        pr = petRepo; 
+    }
 
     /***********************************************/
     /* Method Name - GetAllPet                     */
@@ -84,7 +92,6 @@ class PetServices
     /***********************************************/
     public Pet? AddPet(Pet p)
     {
-
         return pr.AddPet(p); 
     }
 

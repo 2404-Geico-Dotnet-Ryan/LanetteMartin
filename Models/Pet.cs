@@ -3,7 +3,7 @@ class Pet
     //Class Fields
     public int PetId { get; set; }
     public int PersonId { get; set; } /* This will the Pet Parents Person ID */
-    public string? Name { get; set; }
+    public string? PetName { get; set; }
     public string? Color{ get; set; }
     public string? FurType{ get; set; }
     public string? Gender{ get; set; }
@@ -22,11 +22,11 @@ class Pet
     }
 
     /* FULL Argurments Constructor */
-    public Pet(int petId, int personId, string name, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
+    public Pet(int petId, int personId, string petName, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
     {
         PetId = petId;
         PersonId= personId;
-        Name = name;
+        PetName = petName;
         Color = color;
         FurType = furType;
         Gender = gender;
@@ -80,7 +80,7 @@ class Pet
         string newString = "";
         newString += "{Pet Id " + PetId;
         newString += ", Pet Parent Id " +  PersonId;
-        newString += ", Name " + Name;
+        newString += ", Pet Name " + PetName;
         newString += ", Color " + Color;
         newString += ", FurType " + FurType;
         newString += ", Gender " + Gender;

@@ -9,17 +9,43 @@ class Program
     Office Staff - will be able to create new Pet Records, Update Pet Records and Close Out Pet Records
     Pet Owners   - will be able to view their pet's records and reqeust a call back from the Vet staff
     */
-    static PersonServices prs = new();
-    static PetServices pet = new();
+    static PersonServices prs;
+    static PetServices pet;
+
+    static Person? loggedInUser = null;
 
     static void Main(string[] args)
+    {
+        /********************************************/
+        /* Getting connected to the KittyCityVet DB */ 
+        /********************************************/   
+
+        /* Provide path to file holding DB log in credentials */
+        string path = @"C:\Users\U59A24\Desktop\KittyCityVet-DB.txt";
+
+        /* Have code read in the data in the file mapped to above */
+        string connectionString = File.ReadAllText(path); 
+
+        PersonRepo prr = new(connectionString); 
+        prs = new(prr);
+
+        PetRepo ptr = new(connectionString);
+        pet = new(ptr);
+        
+
+        /* Call to display the Home Screen */
+        HomeScreen();
+    }
+
+    public static void HomeScreen()
     {
         Console.WriteLine("-----------------------------");
         Console.WriteLine("    Kitty City Vet Office    ");
         Console.WriteLine("-----------------------------");
-        Console.WriteLine();
 
-        int typeOfUser = DetermineSystemUser(); 
+        /* If Users is sucessfully logged in their 'PersonType'         */
+        /* found on the DB is used to determine which screen to display */ 
+        int typeOfUser = VetLogin(); 
         
         switch (typeOfUser)
         {
@@ -33,11 +59,18 @@ class Program
                 PetOwnerOptions();
                 break;
             }
+            case 3:
+            {
+                Console.WriteLine();
+                Console.WriteLine("Your have failed to login please please contact vet staff to have password reset");
+                Console.WriteLine();
+                break;
+            }
         }
     }
-
     /*********************************************************************/
-    /* The following section of code determines who is useing the system */ 
+    /* The following section of code determines who is useing the system */
+    /* this code was used to test prior to setting up the DB             */ 
     /*********************************************************************/
     public static int DetermineSystemUser()
     {
@@ -55,6 +88,58 @@ class Program
         userSelection = ValidateTask(userSelection, 2);
 
         return userSelection;
+    }
+
+    /*********************************************************************/
+    /* The following section of code logs user into the system           */ 
+    /* If user is successfully logged in their 'PersonType' is returned  */ 
+    /*********************************************************************/
+    public static int VetLogin()
+    {
+        /* User can attemp 3 times to log into the system */
+        /* before we send them back to the home screen    
+        */
+        int counter = 0; 
+        int attemptsLeft = 2;
+        while (counter < 3)
+        {
+            string systemUserId = "";
+            while (systemUserId== "")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please Enter System UserId :");
+                systemUserId = Console.ReadLine().TrimEnd()?? "";
+            }
+
+            string systemPassword = "";
+            while (systemPassword== "")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please Enter System Password :");
+                systemPassword = Console.ReadLine().TrimEnd()?? "";
+            }
+
+            Person loggedIn = prs.LoginUser(systemUserId, systemPassword);
+
+            if(loggedIn != null)
+            {
+                loggedInUser = loggedIn; 
+                return loggedIn.PersonType;
+            }
+            else if (attemptsLeft > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("You entered invalid credentials please try again");
+                Console.WriteLine("You have " + attemptsLeft + " attempts left");
+                counter++;
+                attemptsLeft--;
+            }
+            else 
+            {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     /***********************************************************/
@@ -248,12 +333,12 @@ class Program
 
         /* Will use the new Per Parents ID when builidng thier Pet's Record */ 
         Person? newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNumber, personTitle, personUserName, personPassword, 2);
-        prs?.AddNewPerson(newPerson);
+        Person? addedPerson = prs?.AddNewPerson(newPerson);
 
-        Console.WriteLine(); 
-        Console.WriteLine("Newly Added Pet Parent - " + newPerson);
+        Console.WriteLine();  
+        Console.WriteLine("Newly Added Pet Parent - " + addedPerson);
 
-        Pet? newPet = NewPet(newPerson.PersonId);
+        Pet? newPet = NewPet(addedPerson.PersonId);
 
         Console.WriteLine(); 
         Console.WriteLine("Newly Added Pet - " + newPet);
@@ -354,9 +439,8 @@ class Program
             else inSide  = false;
         }
 
-        /* Need to update to set SeenBy based on Vet employee who is logged into the system */
-        /* Hard Coded until we know who is logged into the system then will update with their information */ 
-        string petSeenBy = "HeadVet Dr Charlie Ho";
+        /* SeenBy set based on Vet employee who is logged into the system */ 
+        string petSeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
 
         /* Creates a new Pet */ 
         Pet newPet = new Pet(0, personId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, petSeenBy, "0");
@@ -415,11 +499,10 @@ class Program
         }
         else updatePet.InSidePet  = false;
      
-        updatePet.AppointmentDate = DateTime.Now.AddDays(-5);
+        updatePet.AppointmentDate = DateTime.Now.AddDays(+1);
 
-        /* Need to update to set SeenBy based on Vet employee who is logged into the system */
-        /* Hard Coded until we know who is logged into the system then will update with their information */ 
-        updatePet.SeenBy = "HeadVet Dr Charlie Ho";
+        /* SeenBy set based on Vet employee who is logged into the system */
+        updatePet.SeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
 
         /* Update the Pet in the collection */
         updatePet = pet.UpdatePet(updatePet);
@@ -480,17 +563,11 @@ class Program
     /***********************************************/
     private static void ViewPetRecord()
     {
-        Console.WriteLine(); 
-        Console.WriteLine(" Please Enter Pet Parent Account Information ");
-        Console.WriteLine("---------------------------------------------");
-
-        Person? lookUp = LookUpParent();
-
         List<Pet> allPersonsPets = new(); 
 
         try
         { 
-            allPersonsPets = pet.GetPersonsPets(lookUp.PersonId); 
+            allPersonsPets = pet.GetPersonsPets(loggedInUser.PersonId); 
         }
         catch (NullReferenceException)
         {
