@@ -1,7 +1,7 @@
 class PersonServices
 {
     /*
-    Services:
+    Services Performed :
         - Add New Person(Pet Parents only at this time)
         - Look Up a Pet Parent 
         - Get ALL Records belonging to a Pet   

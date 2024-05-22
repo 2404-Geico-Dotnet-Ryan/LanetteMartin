@@ -2,6 +2,8 @@ using Microsoft.Data.SqlClient;
 class PetRepo
 {
     /* This class is in the Data Access / Repository layer of the application */ 
+    /* This verson of the class is using ADO.NET */
+    /* for processing with the database          */
     private readonly string _connectionString;
 
     public PetRepo (string connString)

@@ -39,6 +39,7 @@ class Program
 
     public static void HomeScreen()
     {
+        Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("-----------------------------");
         Console.WriteLine("    Kitty City Vet Office    ");
         Console.WriteLine("-----------------------------");
@@ -123,7 +124,12 @@ class Program
 
             if(loggedIn != null)
             {
+                /* Set the loggedInUser to hold the Person you just got logged */
+                /* in for later usage of the data                              */
                 loggedInUser = loggedIn; 
+
+                /* Returning ONLY the Person Type here so it can be used to   */ 
+                /* determine which screen to show to the logged in user       */
                 return loggedIn.PersonType;
             }
             else if (attemptsLeft > 0)
@@ -151,6 +157,7 @@ class Program
 
         while (keepWorking)
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine();
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("- Welcome to the Pet Records System -");
@@ -227,6 +234,7 @@ class Program
 
         while (keepParenting)
         {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
             Console.WriteLine("--------------------------------------");
             Console.WriteLine("- Welcome to the Pet Records System  -");
@@ -439,11 +447,14 @@ class Program
             else inSide  = false;
         }
 
+        DateTime appointmentDate = DateTime.Now;
+
         /* SeenBy set based on Vet employee who is logged into the system */ 
+        /* This is using the 'loggedInUser' data we stored when we logged the person into the system */  
         string petSeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
 
         /* Creates a new Pet */ 
-        Pet newPet = new Pet(0, personId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, petSeenBy, "0");
+        Pet newPet = new Pet(0, personId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, appointmentDate, petSeenBy, "0");
 
         /* Adds the new Pet to the Dictionary */ 
         return pet.AddPet(newPet);
@@ -499,9 +510,12 @@ class Program
         }
         else updatePet.InSidePet  = false;
      
+        /* Setting to one day in the future on purpose here so I can SEE the update better       */
+        /* versus the new date being just a few minutes different than the last Appointment date */ 
         updatePet.AppointmentDate = DateTime.Now.AddDays(+1);
 
-        /* SeenBy set based on Vet employee who is logged into the system */
+        /* SeenBy set based on Vet employee who is logged into the system */ 
+        /* This is using the 'loggedInUser' data we stored when we logged the person into the system */  
         updatePet.SeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
 
         /* Update the Pet in the collection */
@@ -608,6 +622,14 @@ class Program
             petsRainbowBridgeDate = Console.ReadLine().TrimEnd()?? "";   
         }   
 
+        /* SeenBy set based on Vet employee who is logged into the system */ 
+        /* This is using the 'loggedInUser' data we stored when we logged the person into the system */ 
+        closePet.SeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
+
+        /* Setting to one day in the future on purpose here so I can SEE the update better       */
+        /* versus the new date being just a few minutes different than the last Appointment date */ 
+        closePet.AppointmentDate = DateTime.Now.AddDays(+1);
+        
         closePet.RainbowBridgeDate = petsRainbowBridgeDate;
 
         /* Update the Pet in the collection */

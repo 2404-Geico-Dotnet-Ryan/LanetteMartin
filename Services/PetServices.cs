@@ -1,7 +1,7 @@
 class PetServices
 {
     /*
-    Services:
+    Services Performed :
         - Get All Pets in system
         - Get All Pets belonging to a Person
         - Get ALL Records belonging to a Pet   

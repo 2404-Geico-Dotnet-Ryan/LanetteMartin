@@ -6,10 +6,10 @@ class PetStorage
     public PetStorage()
     {
             /* Create Pets */
-            Pet pet1 = new Pet (IdCounter++, 3, "Jay", "Orange", "Short", "Male", 13, 7, false, "0", "0");
-            Pet pet2 = new Pet (IdCounter++, 3, "Turtle", "Tuxcedo", "Short", "Male", 8, 1, true, "0", "0");  
-            Pet pet3 = new Pet (IdCounter++, 4, "DJMeow", "Calico", "Long", "Male", 9, 3, true, "0", "0");
-            Pet pet4 = new Pet (IdCounter++, 4, "DJScratchCat", "Black", "Short", "Female", 9, 3, true, "0", "0");
+            Pet pet1 = new Pet (IdCounter++, 3, "Jay", "Orange", "Short", "Male", 13, 7, false, DateTime.Now, "0", "0");
+            Pet pet2 = new Pet (IdCounter++, 3, "Turtle", "Tuxcedo", "Short", "Male", 8, 1, true, DateTime.Now, "0", "0");  
+            Pet pet3 = new Pet (IdCounter++, 4, "DJMeow", "Calico", "Long", "Male", 9, 3, true, DateTime.Now, "0", "0");
+            Pet pet4 = new Pet (IdCounter++, 4, "DJScratchCat", "Black", "Short", "Female", 9, 3, true, DateTime.Now, "0", "0");
 
             /* Add the new Pet Objects to the dictionary */
             pets =  [];

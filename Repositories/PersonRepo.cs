@@ -2,15 +2,14 @@ using Microsoft.Data.SqlClient;
 class PersonRepo
 {
     /* This class is in the Data Access / Repository layer of the application */ 
+    /* This verson of the class is using ADO.NET */
+    /* for processing with the database          */
     private readonly string _connectionString;
 
     public PersonRepo (string connString)
     {
         _connectionString = connString;
     }
-
-    /* This verson of the class is using ADO.NET */
-    /* for processing with the database          */
 
     /***********************************************/
     /* Method Name - AddPerson                     */

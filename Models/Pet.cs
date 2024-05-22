@@ -22,7 +22,7 @@ class Pet
     }
 
     /* FULL Argurments Constructor */
-    public Pet(int petId, int personId, string petName, string color, string furType, string gender, int weight, int age, bool inSidePet, string seenBy, string rainbowBridgeDate)
+    public Pet(int petId, int personId, string petName, string color, string furType, string gender, int weight, int age, bool inSidePet, DateTime appointmentDate, string seenBy, string rainbowBridgeDate)
     {
         PetId = petId;
         PersonId= personId;
@@ -33,7 +33,7 @@ class Pet
         Weight = weight;
         Age = age; 
         InSidePet = inSidePet;
-        AppointmentDate = DateTime.Now;
+        AppointmentDate = appointmentDate;
         SeenBy = seenBy; 
         RainbowBridgeDate = rainbowBridgeDate; 
     }
@@ -94,5 +94,7 @@ class Pet
         return newString;
     }
 }
+
+
 
 
