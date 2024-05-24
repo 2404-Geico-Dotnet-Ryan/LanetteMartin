@@ -106,7 +106,7 @@ class PetServices
     }
 
     /***********************************************/
-    /* Method Name - UpdatePet                        */
+    /* Method Name - UpdatePet                     */
     /* Inputs      - PetId                         */
     /* Returns     - Located Pet                   */
     /***********************************************/

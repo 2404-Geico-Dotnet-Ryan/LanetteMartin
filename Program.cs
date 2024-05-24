@@ -11,8 +11,10 @@ class Program
     */
     static PersonServices prs;
     static PetServices pet;
-
+    static VisitServices vis;
     static Person? loggedInUser = null;
+
+    static string parentPhoneNum = "";
 
     static void Main(string[] args)
     {
@@ -26,23 +28,36 @@ class Program
         /* Have code read in the data in the file mapped to above */
         string connectionString = File.ReadAllText(path); 
 
+        /* Set up all Repos to have access to the KittyCity database */
         PersonRepo prr = new(connectionString); 
         prs = new(prr);
 
         PetRepo ptr = new(connectionString);
         pet = new(ptr);
-        
 
-        /* Call to display the Home Screen */
+        VisitRepo vir = new(connectionString);
+        vis = new(vir);
+
+        /* Call to display the Systems Home Screen */
         HomeScreen();
     }
 
     public static void HomeScreen()
     {
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine("-----------------------------");
-        Console.WriteLine("    Kitty City Vet Office    ");
-        Console.WriteLine("-----------------------------");
+        Console.WriteLine("------------------------------");
+        Console.WriteLine("  /\\     /\\     WELCOME TO  ");
+        Console.WriteLine(" {  `---'  }       THE        ");    
+        Console.WriteLine(" {  O   O  }    KITTY CITY    ");
+        Console.WriteLine(" ~~>  V  <~~    VET SYSTEM    ");
+        Console.WriteLine("  \\  \\|/  /                 ");   
+        Console.WriteLine("   `-----'____                ");
+        Console.WriteLine("   /     \\    \\_            ");   
+        Console.WriteLine("  {       }\\  )_\\_   _      ");
+        Console.WriteLine("  |  \\_/  |/ /  \\_\\_/ )    ");   
+        Console.WriteLine("   \\__/  /(_/     \\__/      ");
+        Console.WriteLine("     (__/                     ");  
+        Console.WriteLine("------------------------------");    
 
         /* If Users is sucessfully logged in their 'PersonType'         */
         /* found on the DB is used to determine which screen to display */ 
@@ -69,27 +84,6 @@ class Program
             }
         }
     }
-    /*********************************************************************/
-    /* The following section of code determines who is useing the system */
-    /* this code was used to test prior to setting up the DB             */ 
-    /*********************************************************************/
-    public static int DetermineSystemUser()
-    {
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine("- Welcome to the Kitty City Vet Office -");
-        Console.WriteLine("-          Pet Records System          -");
-        Console.WriteLine("-      Who is using system today?      -"); 
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine("Type '1' if you are Vet Staff");
-        Console.WriteLine("Type '2' if you are a Pet Parent");
-        Console.WriteLine();
-    
-        int userSelection = int.Parse(Console.ReadLine().TrimEnd()?? "0");
-
-        userSelection = ValidateTask(userSelection, 2);
-
-        return userSelection;
-    }
 
     /*********************************************************************/
     /* The following section of code logs user into the system           */ 
@@ -98,8 +92,7 @@ class Program
     public static int VetLogin()
     {
         /* User can attemp 3 times to log into the system */
-        /* before we send them back to the home screen    
-        */
+        /* before we send them back to the home screen    */
         int counter = 0; 
         int attemptsLeft = 2;
         while (counter < 3)
@@ -159,7 +152,11 @@ class Program
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine();
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("                       /)            "); 
+            Console.WriteLine("              /\\___/\\ ((           ");
+            Console.WriteLine("              \\`@_@'/  ))           ");
+            Console.WriteLine("              {_:Y:.}_//             ");
+            Console.WriteLine("--------------{_}^-'{_}--------------");
             Console.WriteLine("- Welcome to the Pet Records System -");
             Console.WriteLine("-        Vet Staff Options          -");
             Console.WriteLine("-------------------------------------");
@@ -191,7 +188,7 @@ class Program
                 }
                 case 3:
                 {
-                    ViewPetRecord();
+                    ViewPetRecordVet();
                     break;
                 }                
                 case 4:
@@ -236,10 +233,19 @@ class Program
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
-            Console.WriteLine("--------------------------------------");
-            Console.WriteLine("- Welcome to the Pet Records System  -");
-            Console.WriteLine("-        Pet Parent Options          -");
-            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("      /^--^\\     /^--^\\     /^--^\\    ");
+            Console.WriteLine("      \\____/     \\____/     \\____/    ");
+            Console.WriteLine("     /      \\   /      \\   /      \\    ");
+            Console.WriteLine("    |        | |        | |        |     ");
+            Console.WriteLine("     \\__  __/   \\__  __/   \\__  __/   ");
+            Console.WriteLine("|^|^|^|^\\ \\^|^|^|^/ /^|^|^|^|^\\ \\^|^|^|^|");
+            Console.WriteLine("| | | | |\\ \\| | |/ /| | | | | |\\ \\| | | |");
+            Console.WriteLine("########/ /######\\ \\###########/ /#######");
+            Console.WriteLine("| | | | \\/| | | | \\/| | | | | |\\/ | | | |");
+            Console.WriteLine("|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|");
+            Console.WriteLine("-   Welcome to the Pet Records System   -");
+            Console.WriteLine("-          Pet Parent Options           -");
+            Console.WriteLine("-----------------------------------------");
             Console.WriteLine("Type '1' To View All Your Pets Records");
             Console.WriteLine("Type '2' To Request A Call Back       ");
             Console.WriteLine("Type '3' Exit System                  ");
@@ -252,7 +258,7 @@ class Program
             {
                 case 1:
                 {
-                    ViewPetRecord();
+                    ViewPetRecordParent();
                     break;
                 }
                 case 2:
@@ -311,13 +317,13 @@ class Program
             personLastName = Console.ReadLine().TrimEnd()?? "";
         }
 
-        string personPhoneNumber = "";
-        while (personPhoneNumber == "")
-        {
-            Console.WriteLine();
-            Console.WriteLine("Pet Parent Phone Number :");
-            personPhoneNumber = Console.ReadLine().TrimEnd()?? "";
-        }
+        // string personPhoneNumber = "";
+        // while (personPhoneNumber == "")
+        // {
+        //     Console.WriteLine();
+        //     Console.WriteLine("Pet Parent Phone Number :");
+        //     personPhoneNumber = Console.ReadLine().TrimEnd()?? "";
+        // }
 
         string personUserName = "";
         while (personUserName == "")
@@ -340,7 +346,7 @@ class Program
         string personTitle = "Pet Parent";
 
         /* Will use the new Per Parents ID when builidng thier Pet's Record */ 
-        Person? newPerson = new Person(0, 2, personFirstName, personLastName, personPhoneNumber, personTitle, personUserName, personPassword, 2);
+        Person? newPerson = new Person(0, 2, personFirstName, personLastName, parentPhoneNum, personTitle, personUserName, personPassword, 2);
         Person? addedPerson = prs?.AddNewPerson(newPerson);
 
         Console.WriteLine();  
@@ -456,8 +462,17 @@ class Program
         /* Creates a new Pet */ 
         Pet newPet = new Pet(0, personId, petName, petColor, petFurType, petGender, petWeight, petAge, inSide, appointmentDate, petSeenBy, "0");
 
-        /* Adds the new Pet to the Dictionary */ 
-        return pet.AddPet(newPet);
+        /* Adds the new Pet to the database */ 
+        Pet addPet = pet.AddPet(newPet);
+
+        /* Creates a new Visit */ 
+        Visit newVisit = new Visit(0, addPet.PetId, personId, petWeight, petAge, inSide, appointmentDate, petSeenBy);
+
+        /* Adds the Pets first visit to the database */
+        vis.AddVisit(newVisit);
+
+        /* Returns the new Pet */ 
+        return addPet;
     }
 
     /***********************************************/
@@ -518,8 +533,14 @@ class Program
         /* This is using the 'loggedInUser' data we stored when we logged the person into the system */  
         updatePet.SeenBy = loggedInUser.FirstName + " " + loggedInUser.LastName;
 
-        /* Update the Pet in the collection */
+        /* Update the Pet record in the database with Pets most current data */
         updatePet = pet.UpdatePet(updatePet);
+
+        /* Create a new Visit */ 
+        Visit newVisit = new Visit(0, updatePet.PetId, updatePet.PersonId, updatePet.Weight, updatePet.Age, updatePet.InSidePet, updatePet.AppointmentDate, updatePet.SeenBy);
+
+        /* Adds the Pets current visit to the database */
+        vis.AddVisit(newVisit);
 
         /* After Pet updated display its new information */
         Console.WriteLine();
@@ -567,21 +588,26 @@ class Program
         foreach (Pet pet in pets)
         {
             Console.WriteLine(pet); 
+            Console.WriteLine(""); 
         }
     }
 
-    /***********************************************/
-    /* Method Name - ViewPetRecord                 */
+   /***********************************************/
+    /* Method Name - ViewPetRecordVet              */
     /* Input       - VetRepo Object                */
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
-    private static void ViewPetRecord()
+    private static void ViewPetRecordVet()
     {
+        Person lookUpParent = LookUpParent();
+
         List<Pet> allPersonsPets = new(); 
+        List<Visit> allPersonsVisits = new();
 
         try
         { 
-            allPersonsPets = pet.GetPersonsPets(loggedInUser.PersonId); 
+            allPersonsPets = pet.GetPersonsPets(lookUpParent.PersonId); 
+            allPersonsVisits = vis.GetAllVisitsParent(lookUpParent.PersonId); 
         }
         catch (NullReferenceException)
         {
@@ -592,7 +618,57 @@ class Program
         foreach (Pet pet in allPersonsPets)
         {
             Console.WriteLine();
+            Console.WriteLine("Pets Most Recent Vet Vist Information");
+            Console.WriteLine("-------------------------------------");
             Console.WriteLine(pet);
+            Console.WriteLine();
+            Console.WriteLine("Pets Historical Vet Vist Information");
+            Console.WriteLine("------------------------------------");
+
+            foreach (Visit vist in allPersonsVisits)
+            if (vist.PetId == pet.PetId)
+            {
+                Console.WriteLine(vist);
+            }
+        }
+    }
+
+    /***********************************************/
+    /* Method Name - ViewPetRecordParent           */
+    /* Input       - VetRepo Object                */
+    /* Returns     - VOID (No Data Returned)       */
+    /***********************************************/
+    private static void ViewPetRecordParent()
+    {
+         List<Pet> allPersonsPets = new(); 
+        List<Visit> allPersonsVisits = new();
+
+        try
+        { 
+            allPersonsPets = pet.GetPersonsPets(loggedInUser.PersonId); 
+            allPersonsVisits = vis.GetAllVisitsParent(loggedInUser.PersonId); 
+        }
+        catch (NullReferenceException)
+        {
+            Console.WriteLine("Pet Parent was not located in the system");
+        }
+    
+        /* After Pets retrieved display its information*/
+        foreach (Pet pet in allPersonsPets)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pets Most Recent Vet Vist Information");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine(pet);
+            Console.WriteLine();
+            Console.WriteLine("Pets Historical Vet Vist Information");
+            Console.WriteLine("------------------------------------");
+
+            foreach (Visit vist in allPersonsVisits)
+            if (vist.PetId == pet.PetId)
+            {
+                Console.WriteLine(vist);
+            }
         }
     }
 
@@ -602,8 +678,19 @@ class Program
     /* Returns     - VOID (No Data Returned)       */
     /***********************************************/
     private static void CloseOutPetRecord()
-    {
+    {   Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine();
+        Console.WriteLine("              ___           ");
+        Console.WriteLine("             (___)          ");
+        Console.WriteLine("      ____                  ");
+        Console.WriteLine("    _\\___ \\  |\\_/|          ");
+        Console.WriteLine("   \\     \\ \\/ , , \\ ___     ");
+        Console.WriteLine("    \\__   \\ \\ ='= //|||\\    ");
+        Console.WriteLine("     |===  \\/____)_)||||    ");
+        Console.WriteLine("     \\______|    | |||||    ");
+        Console.WriteLine("         _/_|  | | =====    ");
+        Console.WriteLine("        (_/  \\_)_)          ");
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("  Please Enter Date Kitty   ");
         Console.WriteLine(" Crossed the Rainbow Bridge ");     
         Console.WriteLine("----------------------------");
@@ -720,14 +807,15 @@ class Program
     /***********************************************/
     private static Person? LookUpParent()
     {
-        string personPhoneNum = "";
-        while (personPhoneNum == "")
+
+        parentPhoneNum = "";
+        while (parentPhoneNum == "")
         {
             Console.WriteLine("Pet Parent Phone Number :");
-            personPhoneNum = Console.ReadLine().TrimEnd()?? "";
+            parentPhoneNum = Console.ReadLine().TrimEnd()?? "";
         }
 
-        Person? lookUp = prs.LookUpPetParent(personPhoneNum);
+        Person? lookUp = prs.LookUpPetParent(parentPhoneNum);
 
         return lookUp; 
     }
